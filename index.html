@@ -1,0 +1,576 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>बही खाता · Bahi Khata</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#3b1b0a">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--p:#3b1b0a;--p2:#5a2e14;--acc:#c9953c;--bg:#f6e6c9;--card:#fffaf0;--soft:#fbefd5;--line:#e6d3ac;--ok:#1f8a43;--bad:#d32f2f;--txt:#2b1608;--mut:#7a6247}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Noto Sans Devanagari","Segoe UI",sans-serif;font-size:16px;line-height:1.45}
+button{font:inherit;cursor:pointer}
+#hdr{background:linear-gradient(180deg,#3b1b0a,#4d2610);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 12px 14px;border-radius:0 0 22px 22px}
+.top{display:flex;align-items:center;gap:6px}
+.seg{flex:1;display:flex;background:#00000033;border-radius:12px;padding:3px}
+.seg button{flex:1;border:0;background:none;color:#e8d3ad;padding:8px 4px;border-radius:10px;font-weight:700;font-size:14px}
+.seg button.on{background:#fffaf0;color:var(--p)}
+.ic{background:#ffffff1f;color:#fff;border:0;border-radius:10px;min-width:40px;height:38px;font-size:16px;font-weight:800}
+.hello{margin:14px 2px 10px;font-size:19px;font-weight:800}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sc{border-radius:14px;padding:10px 12px;background:#ffffff1a;border:1px solid #ffffff22}
+.sc small{display:block;font-size:13px;opacity:.9}.sc b{font-size:21px}
+.sc.g{background:#2e7d4a66}.sc.r{background:#c6282866}
+.note{margin-top:10px;background:#ffffff14;border-radius:12px;padding:8px 10px;font-size:13px;text-align:center}
+#app{padding:12px 12px 110px;max-width:720px;margin:0 auto}
+.sbox{display:flex;gap:8px;align-items:center}
+.sbox input{flex:1}
+input,select{width:100%;font:inherit;padding:11px 12px;border:1px solid var(--line);border-radius:12px;background:#fff;color:var(--txt)}
+.lbl{font-size:12px;font-weight:800;letter-spacing:.4px;color:var(--mut);margin:14px 2px 6px;text-transform:uppercase}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.chips button{border:0;background:#fff3d9;border-radius:10px;padding:8px 14px;white-space:nowrap;font-weight:600}
+.chips button.on{background:var(--p);color:#fff}
+.cust{display:flex;align-items:center;gap:10px;background:var(--card);border-radius:14px;padding:12px;margin:10px 0;border-left:5px solid #b9a98b;box-shadow:0 1px 4px #0001}
+.cust.g{border-left-color:var(--ok)}.cust.r{border-left-color:var(--bad)}
+.av{width:42px;height:42px;border-radius:50%;background:#8d6e63;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:18px;flex:none}
+.mid{flex:1;min-width:0}.mid b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sub{font-size:13px;color:var(--mut)}
+.rt{text-align:right}.rt b{font-size:18px;display:block}
+.tag{display:inline-block;font-size:12px;border-radius:8px;padding:1px 8px;margin-top:2px}
+.tag.g{background:#e3f5e8;color:var(--ok)}.tag.r{background:#fde7e7;color:var(--bad)}.tag.z{background:#eee;color:#666}
+.rt .g{color:var(--ok)}.rt .r{color:var(--bad)}
+.empty{text-align:center;color:var(--mut);padding:26px 8px}.empty span{display:block;font-size:36px}
+#bar,.lbar{position:fixed;left:0;right:0;bottom:0;background:linear-gradient(180deg,#f6e6c900,#f6e6c9 35%);padding:14px 14px calc(12px + env(safe-area-inset-bottom));display:flex;gap:10px;z-index:30}
+.lbar{z-index:5;background:var(--bg)}
+.big{flex:1;border:0;border-radius:14px;padding:15px;color:#fff;background:var(--p);font-weight:800;font-size:17px;box-shadow:0 3px 10px #0003}
+.big.red{background:var(--bad)}.big.grn{background:var(--ok)}
+.layer{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column}
+.lh{background:var(--p);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 10px 12px;display:flex;align-items:center;gap:8px;flex:none}
+.lh.red{background:var(--bad)}.lh.grn{background:var(--ok)}
+.lh .th{flex:1;font-weight:800;font-size:18px;text-align:center;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lb{flex:1;overflow:auto;padding:12px 12px 110px}
+.hero{background:linear-gradient(180deg,#4d2610,#3b1b0a);color:#fff;padding:0 16px 16px;flex:none}
+.hero small{opacity:.85}.hero .bigamt{font-size:32px;font-weight:900}
+.acts{display:flex;gap:8px;margin-top:10px}
+.acts button,.acts a{flex:1;text-align:center;background:#ffffff1f;color:#fff;border:0;border-radius:10px;padding:8px;text-decoration:none;font-size:14px;font-weight:700}
+.tbl{background:var(--card);border-radius:12px;overflow:hidden}
+.tr,.th2{display:grid;grid-template-columns:1.7fr 1fr 1fr;gap:6px;padding:11px 12px;align-items:center;border-bottom:1px solid var(--line)}
+.th2{background:#efe0bd;font-size:12px;font-weight:800;color:var(--mut);position:sticky;top:0}
+.th2 span:nth-child(n+2),.tr .c{text-align:right}
+.tr small{display:block;color:var(--mut)}.tr .r{color:var(--bad);font-weight:800}.tr .g{color:var(--ok);font-weight:800}
+.tr.tot{background:#efe0bd;font-weight:800}
+.fc{background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:10px;box-shadow:0 1px 4px #0001}
+.fc label{display:block;font-size:12px;color:var(--mut);margin-bottom:4px}
+.fc input,.fc select{border:0;border-bottom:1px solid var(--line);border-radius:0;padding:6px 0;background:none}
+.amt{font-size:26px;font-weight:800;min-height:38px;word-break:break-all}
+.calc{margin-top:4px}
+.cres{text-align:right;background:#fff;border-radius:12px;padding:8px 12px;color:var(--mut);margin-bottom:8px;min-height:38px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.keys button{border:0;border-radius:12px;padding:13px 0;background:#fff;font-size:19px;font-weight:600;box-shadow:0 1px 3px #0002}
+.keys button.op{background:var(--p);color:#fff}.keys button.fn{background:#eadbbd}.keys .z{grid-column:span 2}
+.seg2{display:flex;gap:8px;margin-bottom:10px}
+.seg2 button{flex:1;border:0;border-radius:12px;padding:10px;background:#fff3d9;font-weight:700}
+.seg2 button.on{background:var(--p);color:#fff}
+.seg2 button.on.rr{background:var(--bad)}.seg2 button.on.gg{background:var(--ok)}
+.card{background:var(--card);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 1px 4px #0001}
+.nav{display:flex;align-items:center;justify-content:center;gap:18px;margin:6px 0 10px;font-weight:800;font-size:18px}
+.nav button{background:none;border:0;font-size:24px;color:var(--p)}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.kp div{background:var(--card);border-radius:12px;padding:8px;text-align:center}.kp small{display:block;color:var(--mut);font-size:12px}.kp b{font-size:16px}
+.total{text-align:center}.total small{color:var(--mut)}.total b{display:block;font-size:30px;color:var(--p)}
+.donut{width:210px;height:210px;display:block;margin:6px auto;transform:rotate(0deg)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;justify-content:center}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:middle;flex:none}
+.row{display:flex;align-items:center;gap:8px;padding:11px 4px;border-bottom:1px solid var(--line)}
+.row:last-child{border:0}.row .n{flex:1;min-width:0}.row .v{text-align:right;font-weight:800}
+.hd{display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}.hd b{font-size:17px}
+.sm{background:#e9d3a8;color:var(--p);border:0;border-radius:10px;padding:7px 12px;font-weight:700;font-size:14px}
+.dlgwrap{position:fixed;inset:0;background:#2b160899;display:flex;align-items:center;justify-content:center;padding:16px}
+.dlgwrap.sheet{align-items:flex-end;padding:0}
+.dlg{background:#fff;border-radius:18px;width:100%;max-width:420px;padding:14px;max-height:88vh;overflow:auto}
+.sheet .dlg{max-width:720px;border-radius:20px 20px 0 0;padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+.dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;font-size:18px}
+.dk{background:none;color:var(--txt)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.grid3 button{border:1px solid var(--line);background:var(--soft);border-radius:12px;padding:12px 4px;font-weight:600;font-size:14px}
+.cols{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 14px}
+.cols button{width:40px;height:40px;border-radius:50%;border:3px solid transparent}
+.cols button.on{border-color:#000}
+.pri{width:100%;border:0;border-radius:12px;padding:13px;background:var(--bad);color:#fff;font-weight:800;font-size:16px}
+.mini{width:36px;height:36px;border:0;background:none;font-size:18px}
+#toasts{position:fixed;left:0;right:0;bottom:calc(86px + env(safe-area-inset-bottom));z-index:500;display:flex;flex-direction:column;align-items:center;gap:6px;pointer-events:none}
+.toast{background:#2b1608;color:#fff;border-radius:12px;padding:10px 14px;pointer-events:auto;font-size:14px;max-width:92%}.toast button{margin-left:10px;background:#f2d7aa;border:0;border-radius:8px;padding:3px 10px}
+.menu{position:fixed;right:10px;top:calc(56px + env(safe-area-inset-top));background:#fffaf0;color:var(--txt);border:1px solid var(--line);border-radius:12px;box-shadow:0 6px 20px #0004;z-index:90;min-width:220px;overflow:hidden}
+.menu button{display:block;width:100%;text-align:left;background:none;border:0;padding:12px 14px;border-bottom:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div id="hdr"></div>
+<main id="app"></main>
+<div id="bar"></div>
+<div id="layers"></div>
+<div id="toasts"></div>
+<input type="file" id="imp" accept=".json,application/json" hidden>
+<script>
+"use strict";
+const KEY="bahikhata_v2",OLD="bahikhata_v1";
+/* ---------- भाषा / Language ---------- */
+const T={
+ khata:["हिसाब खाता","Hisab Khata"],expm:["खर्च प्रबंधक","Expense Manager"],
+ hello:["नमस्ते, कैसे हैं आप?","Hello, how are you?"],
+ youget:["आपको मिलेगा","You'll Get"],yougive:["आपको देना है","You'll Give"],
+ localnote:["🔒 आपका डेटा इस फ़ोन में सेव है। बैकअप लेते रहें।","🔒 Your data is saved on this phone. Keep taking backups."],
+ search:["पार्टी खोजें...","Search customers..."],filtby:["प्रकार से छाँटें","Filter by type"],
+ all:["सभी","All"],fget:["मिलेगा","You will get"],fgive:["देना है","You will give"],settled:["हिसाब बराबर","Settled"],
+ lblget:["आपको मिलेगा","You will get"],lblgive:["आपको देना है","You will give"],
+ tget:["आपको मिलेगा","You'll Get"],tgive:["आपको देना है","You'll Give"],
+ addparty:["पार्टी जोड़ें","Add Customer"],editparty:["पार्टी एडिट करें","Edit Customer"],
+ noparty:["कोई पार्टी नहीं है। नीचे 'पार्टी जोड़ें' दबाएँ।","No customers yet. Tap 'Add Customer' below."],
+ pname:["पार्टी का नाम *","Customer name *"],mobile:["मोबाइल नंबर","Mobile number"],pnote:["पता / नोट","Address / note"],
+ save:["सेव करें","Save"],cancel:["रद्द करें","Cancel"],del:["हटाएँ","Delete"],
+ wa:["WhatsApp","WhatsApp"],call:["कॉल","Call"],edit:["एडिट","Edit"],
+ delparty:["इस पार्टी और इसके सारे लेन-देन हटा दें?","Delete this customer and all entries?"],
+ deltx:["यह लेन-देन हटा दें?","Delete this entry?"],undo:["वापस लाएँ","Undo"],deleted:["हटा दिया गया।","Deleted."],
+ yougave:["आपने दिया","YOU GAVE"],yougot:["आपको मिला","YOU GOT"],
+ allentries:["सभी प्रविष्टियाँ","ALL ENTRIES"],total:["कुल","Total"],noentries:["अभी कोई लेन-देन नहीं।","No entries yet."],
+ amount:["राशि","Amount"],noteopt:["नोट (वैकल्पिक)","Note (Optional)"],addnote:["नोट जोड़ें","Add a note"],date:["तारीख","Date"],
+ savetx:["लेन-देन सेव करें","Save Transaction"],
+ hgave:["आपने {0} को ₹{1} दिए","You gave {0} ₹{1}"],hgot:["आपको {0} से ₹{1} मिले","You got ₹{1} from {0}"],
+ badamt:["सही राशि भरें।","Enter a valid amount."],badname:["नाम भरें।","Enter a name."],saved:["सेव हो गया।","Saved."],
+ month:["माह","Month"],year:["साल","Year"],alltime:["अब तक","All Time"],
+ totexp:["कुल खर्च","Total Expenses"],totinc:["कुल आय","Total Income"],
+ income:["आय","Income"],expense:["खर्च","Expense"],net:["बचत","Net"],
+ breakdown:["श्रेणी अनुसार","Breakdown"],entries:["प्रविष्टियाँ","Entries"],managecats:["⚙️ श्रेणियाँ","⚙️ Categories"],
+ noexp:["इस अवधि में कोई प्रविष्टि नहीं।","No entries in this period."],
+ addexp:["खर्च / आय जोड़ें","Add Expense / Income"],addexpT:["खर्च जोड़ें","Add Expense"],addincT:["आय जोड़ें","Add Income"],
+ editexpT:["खर्च एडिट करें","Edit Expense"],editincT:["आय एडिट करें","Edit Income"],
+ category:["श्रेणी","Category"],selcat:["श्रेणी चुनें","Select category"],
+ managecatsT:["श्रेणियाँ मैनेज करें","Manage Categories"],tapedit:["श्रेणी बदलने या हटाने के लिए आइकन दबाएँ","Use the icons to edit or delete a category"],
+ addcat:["श्रेणी जोड़ें","Add Category"],newcat:["नई श्रेणी","Add New Category"],editcat:["श्रेणी एडिट करें","Edit Category"],
+ catname:["श्रेणी का नाम","Category Name"],selcolor:["रंग चुनें","Select Color"],uncat:["अन्य / हटाई गई","Other / removed"],
+ delcat:["यह श्रेणी हटाएँ? पुरानी प्रविष्टियाँ बनी रहेंगी।","Delete this category? Old entries are kept."],
+ catfirst:["पहले श्रेणी चुनें।","Choose a category."],
+ bizname:["✏️ दुकान / फर्म का नाम","✏️ Shop / business name"],backup:["⬇️ बैकअप डाउनलोड","⬇️ Download backup"],restore:["⬆️ बैकअप वापस लाएँ","⬆️ Restore backup"],
+ install:["📲 ऐप इंस्टॉल करें","📲 Install app"],
+ restoreq:["मौजूदा डेटा की जगह बैकअप वाला डेटा आ जाएगा। आगे बढ़ें?","Current data will be replaced by the backup. Continue?"],
+ restored:["बैकअप वापस आ गया।","Backup restored."],badfile:["यह सही बैकअप फ़ाइल नहीं है।","This is not a valid backup file."],
+ nocontacts:["यह ब्राउज़र कॉन्टैक्ट लिस्ट सपोर्ट नहीं करता। Android के Chrome में खोलें।","Contact picker not supported here. Open in Chrome on Android."],
+ nonum:["इस कॉन्टैक्ट में नंबर नहीं है","This contact has no number"],noread:["कॉन्टैक्ट नहीं मिल सका","Could not read contacts"],
+ storefull:["सेव नहीं हो सका (स्टोरेज भरा है)","Could not save (storage full)"],
+ waget:["नमस्ते {0} जी,\n{1} की ओर से हिसाब: आपका {2} बाकी है। कृपया भुगतान कर दें। धन्यवाद 🙏","Hello {0},\nFrom {1}: your outstanding balance is {2}. Please pay at your convenience. Thank you."],
+ wagive:["नमस्ते {0} जी,\n{1} की ओर से हिसाब: हमें आपको {2} देने हैं। धन्यवाद 🙏","Hello {0},\nFrom {1}: we owe you {2}. Thank you."],
+ waok:["नमस्ते {0} जी,\n{1} की ओर से: आपका हिसाब बराबर है। धन्यवाद 🙏","Hello {0},\nFrom {1}: your account is settled. Thank you."]
+};
+let LANG=localStorage.getItem("bk_lang")==="en"?"en":"hi";
+const t=(k,...a)=>{const e=T[k];let s=e?e[LANG==="en"?1:0]:k;a.forEach((v,i)=>{s=s.split("{"+i+"}").join(v)});return s};
+/* ---------- डेटा ---------- */
+const COLORS=["#ef5350","#ff7043","#fbc02d","#66bb6a","#26a69a","#42a5f5","#5c6bc0","#ab47bc","#ec407a","#78909c"];
+const DEFC=[
+ ["e_food","expense","खाना","Food","#ef5350"],["e_trans","expense","यात्रा / परिवहन","Transport","#42a5f5"],["e_shop","expense","खरीदारी","Shopping","#ab47bc"],
+ ["e_emi","expense","किस्त / EMI","EMIs","#ff9800"],["e_mob","expense","मोबाइल","Mobile","#e040fb"],["e_rent","expense","किराया","Rent","#5c6bc0"],
+ ["e_bill","expense","बिजली / पानी","Bills","#26a69a"],["e_wage","expense","वेतन / मजदूरी","Wages","#8d6e63"],["e_oth","expense","अन्य","Other","#66bb6a"],
+ ["i_sale","income","बिक्री","Sales","#66bb6a"],["i_serv","income","सेवा / बुकिंग","Services","#26a69a"],["i_rec","income","उधार वसूली","Recovery","#42a5f5"],["i_oth","income","अन्य आय","Other income","#fbc02d"]
+];
+const defCats=()=>DEFC.map(c=>({id:c[0],type:c[1],name:{hi:c[2],en:c[3]},color:c[4]}));
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+function migrate(o){
+ const d={biz:(o.biz&&o.biz!=="बही खाता")?o.biz:"",parties:o.parties||[],tx:o.tx||[],cash:[],cats:Array.isArray(o.cats)&&o.cats.length?o.cats:defCats()};
+ (o.cash||[]).forEach(c=>{
+  let id=c.cat;
+  if(!d.cats.find(x=>x.id===id)){
+   let ct=d.cats.find(x=>x.type===c.type&&typeof x.name==="object"&&(x.name.hi===c.cat||x.name.en===c.cat))||d.cats.find(x=>x.type===c.type&&x.name===c.cat);
+   if(!ct){ct={id:"c_"+uid(),type:c.type,name:c.cat||"अन्य",color:"#78909c"};d.cats.push(ct)}
+   id=ct.id;
+  }
+  d.cash.push(Object.assign({},c,{cat:id}));
+ });
+ return d;
+}
+function load(){
+ try{const d=JSON.parse(localStorage.getItem(KEY));if(d&&Array.isArray(d.parties)&&Array.isArray(d.cats))return d}catch(e){}
+ try{const o=JSON.parse(localStorage.getItem(OLD));if(o&&Array.isArray(o.parties))return migrate(o)}catch(e){}
+ return {biz:"",parties:[],tx:[],cash:[],cats:defCats()};
+}
+let DB=load();
+function save(){try{localStorage.setItem(KEY,JSON.stringify(DB))}catch(e){toast(t("storefull"))}}
+/* ---------- सहायक ---------- */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const num=v=>{const n=parseFloat(v);return isFinite(n)?n:0};
+const r2=v=>Math.round(num(v)*100)/100;
+const money=v=>{const n=r2(v);return (n<0?"-":"")+"₹"+Math.abs(n).toLocaleString("en-IN")};
+const ymd=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const today=()=>ymd(new Date());
+const fmtDate=s=>{const m=/^(\d{4})-(\d\d)-(\d\d)$/.exec(s||"");return m?m[3]+"/"+m[2]+"/"+m[1]:(s||"")};
+const fmtTime=iso=>{const d=new Date(iso);return isNaN(d)?"":d.toLocaleTimeString("en-IN",{hour:"numeric",minute:"2-digit",hour12:true}).toUpperCase()};
+const loc=()=>LANG==="en"?"en-IN":"hi-IN";
+const catName=c=>!c?t("uncat"):(typeof c.name==="string"?c.name:(c.name[LANG]||c.name.hi));
+const catById=id=>DB.cats.find(c=>c.id===id);
+const party=id=>DB.parties.find(p=>p.id===id);
+function parties(){
+ const by={};
+ DB.tx.forEach(x=>{const o=by[x.pid]||(by[x.pid]={g:0,r:0,last:""});if(x.type==="gave")o.g+=num(x.amount);else o.r+=num(x.amount);if((x.date||"")>o.last)o.last=x.date||""});
+ return DB.parties.map(p=>{const o=by[p.id]||{g:0,r:0,last:""};return Object.assign({},p,{bal:r2(o.g-o.r),last:o.last})});
+}
+const balOf=id=>{const p=parties().find(x=>x.id===id);return p?p.bal:0};
+function toast(msg,act){
+ const d=document.createElement("div");d.className="toast";d.textContent=msg;
+ if(act){const b=document.createElement("button");b.textContent=act.label;b.onclick=()=>{act.fn();d.remove()};d.appendChild(b)}
+ $("toasts").appendChild(d);setTimeout(()=>d.remove(),act?6000:2800);
+}
+/* ---------- स्टेट ---------- */
+const S={tab:"khata",q:"",flt:"all",per:"month",ref:today().slice(0,7)+"-01",etype:"expense"};
+/* ---------- लेयर (पेज / डायलॉग) और बैक बटन ---------- */
+const stack=[];
+function push(k,o,replace){
+ if(replace&&stack.length){const old=stack.pop();old.el.remove()}
+ const el=document.createElement("div");
+ el.className=o.dlg?("dlgwrap"+(o.sheet?" sheet":"")):"layer";
+ el.style.zIndex=100+stack.length*2;
+ const L=Object.assign({k,el},o);el._L=L;stack.push(L);$("layers").appendChild(el);
+ L.build(L);
+ if(replace)history.replaceState({d:stack.length},"");else history.pushState({d:stack.length},"");
+ return L;
+}
+window.addEventListener("popstate",e=>{
+ const d=(e.state&&e.state.d)||0;
+ while(stack.length>d){const L=stack.pop();L.el.remove()}
+});
+const back=()=>history.back();
+const layerOf=t=>{const e=t.closest(".layer,.dlgwrap");return e&&e._L};
+function refreshLayers(){stack.forEach(L=>{if(L.refresh)L.refresh(L)})}
+/* ---------- मुख्य स्क्रीन ---------- */
+function render(){
+ document.documentElement.lang=LANG;
+ let h=`<div class="top"><div class="seg"><button data-act="tab" data-id="khata" class="${S.tab==="khata"?"on":""}">${t("khata")}</button><button data-act="tab" data-id="exp" class="${S.tab==="exp"?"on":""}">${t("expm")}</button></div><button class="ic" data-act="lang">${LANG==="hi"?"EN":"हि"}</button><button class="ic" data-act="menu">⋮</button></div>`;
+ if(S.tab==="khata"){
+  const ps=parties(),get=ps.reduce((s,p)=>s+(p.bal>0?p.bal:0),0),give=ps.reduce((s,p)=>s+(p.bal<0?-p.bal:0),0);
+  h+=`<div class="hello">👤 ${esc(DB.biz||t("hello"))}</div><div class="cards"><div class="sc g"><small>${t("youget")}</small><b>${money(get)}</b></div><div class="sc r"><small>${t("yougive")}</small><b>${money(give)}</b></div></div><div class="note">${t("localnote")}</div>`;
+ }
+ $("hdr").innerHTML=h;
+ $("app").innerHTML=S.tab==="khata"?khataHtml():expHtml();
+ $("bar").innerHTML=S.tab==="khata"?`<button class="big" data-act="addparty">➕ ${t("addparty")}</button>`:`<button class="big" data-act="addexp">➕ ${t("addexp")}</button>`;
+ refreshLayers();
+}
+const chips=(list,cur,act)=>`<div class="chips">${list.map(x=>`<button data-act="${act}" data-id="${x[0]}" class="${x[0]===cur?"on":""}">${x[1]}</button>`).join("")}</div>`;
+const empty=(ic,s)=>`<div class="empty"><span>${ic}</span>${s}</div>`;
+function listHtml(){
+ const q=S.q.trim().toLowerCase();
+ let l=parties().filter(p=>!q||((p.name||"")+" "+(p.phone||"")).toLowerCase().includes(q));
+ if(S.flt==="get")l=l.filter(p=>p.bal>0);else if(S.flt==="give")l=l.filter(p=>p.bal<0);else if(S.flt==="zero")l=l.filter(p=>p.bal===0);
+ l.sort((a,b)=>Math.abs(b.bal)-Math.abs(a.bal)||String(a.name).localeCompare(b.name));
+ if(!l.length)return empty("📖",t("noparty"));
+ return l.map(p=>{const c=p.bal>0?"g":p.bal<0?"r":"z";
+  return `<div class="cust ${c==="z"?"":c}" data-act="opencust" data-id="${esc(p.id)}"><div class="av">${esc((p.name||"?").trim().charAt(0).toUpperCase())}</div><div class="mid"><b>${esc(p.name)}</b><div class="sub">🕘 ${p.last?fmtDate(p.last):"-"}</div></div><div class="rt"><b class="${c}">${money(Math.abs(p.bal))}</b><span class="tag ${c}">${p.bal>0?t("tget"):p.bal<0?t("tgive"):t("settled")}</span></div></div>`}).join("");
+}
+function khataHtml(){
+ return `<div class="sbox"><input id="q" placeholder="🔎 ${t("search")}" value="${esc(S.q)}"></div><div class="lbl">${t("filtby")}</div>${chips([["all",t("all")],["get",t("fget")],["give",t("fgive")],["zero",t("settled")]],S.flt,"flt")}<div id="plist">${listHtml()}</div>`;
+}
+/* ---------- खर्च प्रबंधक ---------- */
+function inPer(d){d=d||"";if(S.per==="all")return true;return S.per==="month"?d.slice(0,7)===S.ref.slice(0,7):d.slice(0,4)===S.ref.slice(0,4)}
+function perLabel(){
+ if(S.per==="all")return "";
+ const d=new Date(S.ref+"T00:00:00");
+ return S.per==="month"?d.toLocaleDateString(loc(),{month:"long",year:"numeric"}):String(d.getFullYear());
+}
+function donut(items,total){
+ if(!total)return "";
+ let off=0;const R=15.9155;
+ return `<svg viewBox="0 0 42 42" class="donut"><circle cx="21" cy="21" r="${R}" fill="none" stroke="#eee" stroke-width="7"/>`+items.map(i=>{const p=i.sum/total*100,s=`<circle cx="21" cy="21" r="${R}" fill="none" stroke="${i.color}" stroke-width="7" stroke-dasharray="${p} ${100-p}" stroke-dashoffset="${25-off}"/>`;off+=p;return s}).join("")+`</svg>`;
+}
+function groupCats(type){
+ const by={};
+ DB.cash.filter(c=>c.type===type&&inPer(c.date)).forEach(c=>{
+  const ct=catById(c.cat),k=ct?ct.id:"?";
+  const o=by[k]||(by[k]={id:k,name:catName(ct),color:ct?ct.color:"#9e9e9e",sum:0});o.sum+=num(c.amount);
+ });
+ return Object.values(by).sort((a,b)=>b.sum-a.sum);
+}
+function entryRow(c){
+ const ct=catById(c.cat),ex=c.type==="expense";
+ return `<div class="row" data-act="editexp" data-id="${esc(c.id)}"><span class="dot" style="background:${ct?ct.color:"#9e9e9e"}"></span><div class="n"><b>${esc(catName(ct))}</b><div class="sub">${fmtDate(c.date)}${c.note?" • "+esc(c.note):""}</div></div><div class="v" style="color:${ex?"var(--bad)":"var(--ok)"}">${ex?"−":"+"}${money(c.amount)}</div></div>`;
+}
+function expHtml(){
+ const per=DB.cash.filter(c=>inPer(c.date)),sum=ty=>per.filter(c=>c.type===ty).reduce((s,c)=>s+num(c.amount),0);
+ const inc=sum("income"),exp=sum("expense"),ty=S.etype,tot=ty==="expense"?exp:inc,items=groupCats(ty);
+ const ents=per.filter(c=>c.type===ty).sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.at).localeCompare(String(a.at)));
+ return `<div class="seg2" style="margin-top:2px">${[["month",t("month")],["year",t("year")],["all",t("alltime")]].map(x=>`<button data-act="per" data-id="${x[0]}" class="${S.per===x[0]?"on":""}">${x[1]}</button>`).join("")}</div>
+ ${S.per==="all"?"":`<div class="nav"><button data-act="pnav" data-n="-1">‹</button><span>${esc(perLabel())}</span><button data-act="pnav" data-n="1">›</button></div>`}
+ <div class="kp"><div><small>${t("income")}</small><b style="color:var(--ok)">${money(inc)}</b></div><div><small>${t("expense")}</small><b style="color:var(--bad)">${money(exp)}</b></div><div><small>${t("net")}</small><b>${money(inc-exp)}</b></div></div>
+ <div class="seg2"><button data-act="etog" data-id="expense" class="${ty==="expense"?"on rr":""}">${t("expense")}</button><button data-act="etog" data-id="income" class="${ty==="income"?"on gg":""}">${t("income")}</button></div>
+ <div class="card total"><small>${ty==="expense"?t("totexp"):t("totinc")}</small><b>${money(tot)}</b></div>
+ ${items.length?`<div class="card">${donut(items,tot)}<div class="legend">${items.map(i=>`<span><span class="dot" style="background:${i.color}"></span>${esc(i.name)} (${(i.sum/tot*100).toFixed(1)}%)</span>`).join("")}</div></div>
+ <div class="card"><div class="hd"><b>${t("breakdown")}</b><button class="sm" data-act="managecats">${t("managecats")}</button></div>${items.map(i=>`<div class="row" data-act="opencat" data-id="${esc(i.id)}"><span class="dot" style="background:${i.color}"></span><div class="n">${esc(i.name)}</div><div class="v">${(i.sum/tot*100).toFixed(1)}%<br>${money(i.sum)}</div></div>`).join("")}</div>
+ <div class="card"><div class="hd"><b>${t("entries")}</b></div>${ents.map(entryRow).join("")}</div>`
+ :`<div class="card">${empty("📒",t("noexp"))}<div style="text-align:center"><button class="sm" data-act="managecats">${t("managecats")}</button></div></div>`}`;
+}
+/* ---------- पार्टी की डिटेल ---------- */
+function buildCust(L){
+ const p=party(L.id);if(!p){L.el.innerHTML="";return}
+ const bal=balOf(p.id),tx=DB.tx.filter(x=>x.pid===p.id).sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.at).localeCompare(String(a.at)));
+ const g=tx.filter(x=>x.type==="gave").reduce((s,x)=>s+num(x.amount),0),r=tx.filter(x=>x.type==="got").reduce((s,x)=>s+num(x.amount),0);
+ L.el.innerHTML=`<div class="lh"><button class="ic" data-act="back">←</button><span class="th">${esc(p.name)}</span><button class="ic" data-act="delparty" data-id="${esc(p.id)}">🗑️</button></div>
+ <div class="hero"><small>${bal>0?t("lblget"):bal<0?t("lblgive"):t("settled")}</small><div class="bigamt">${money(Math.abs(bal))}</div>${p.phone?`<small>📞 ${esc(p.phone)}</small>`:""}${p.note?`<br><small>${esc(p.note)}</small>`:""}
+ <div class="acts"><button data-act="wa" data-id="${esc(p.id)}">💬 ${t("wa")}</button>${p.phone?`<a href="tel:${esc(p.phone)}">📞 ${t("call")}</a>`:""}<button data-act="editparty" data-id="${esc(p.id)}">✏️ ${t("edit")}</button></div></div>
+ <div class="lb" style="padding-top:10px"><div class="tbl"><div class="th2"><span>${t("allentries")}</span><span>${t("yougave")}</span><span>${t("yougot")}</span></div>
+ ${tx.length?tx.map(x=>`<div class="tr" data-act="edittx" data-id="${esc(x.id)}"><div>${fmtDate(x.date)}${fmtTime(x.at)?" · "+fmtTime(x.at):""}${x.note?`<small>${esc(x.note)}</small>`:""}</div><div class="c ${x.type==="gave"?"r":""}">${x.type==="gave"?money(x.amount):"-"}</div><div class="c ${x.type==="got"?"g":""}">${x.type==="got"?money(x.amount):"-"}</div></div>`).join("")+`<div class="tr tot"><div>${t("total")}</div><div class="c r">${money(g)}</div><div class="c g">${money(r)}</div></div>`:`<div class="empty"><span>📖</span>${t("noentries")}</div>`}</div></div>
+ <div class="lbar"><button class="big red" data-act="newtx" data-p="${esc(p.id)}" data-t="gave">⬆ ${t("yougave")}</button><button class="big grn" data-act="newtx" data-p="${esc(p.id)}" data-t="got">⬇ ${t("yougot")}</button></div>`;
+}
+const openCust=(id,replace)=>push("cust",{id,build:buildCust,refresh:buildCust},replace);
+/* ---------- पार्टी जोड़ें / एडिट ---------- */
+function buildParty(L){
+ const p=L.id?party(L.id):null;
+ L.el.innerHTML=`<div class="lh"><button class="ic" data-act="back">←</button><span class="th">${p?t("editparty"):t("addparty")}</span><span style="width:40px"></span></div>
+ <div class="lb"><div class="fc"><label>${t("pname")}</label><input class="f-name" value="${esc(p?p.name:"")}" autocomplete="off"></div>
+ <div class="fc"><label>${t("mobile")}</label><div style="display:flex;gap:6px;align-items:center"><input class="f-phone" type="tel" inputmode="tel" value="${esc(p?p.phone:"")}"><button type="button" class="sm" data-act="pick">📇</button></div></div>
+ <div class="fc"><label>${t("pnote")}</label><input class="f-note" value="${esc(p?p.note:"")}"></div></div>
+ <div class="lbar"><button class="big" data-act="saveparty">${t("save")}</button></div>`;
+}
+
+/* ---------- लेन-देन फ़ॉर्म + कैलकुलेटर ---------- */
+const ops="+−×÷";
+const strip=e=>e.replace(/[+−×÷.]+$/,"");
+function calcEval(expr){
+ const s=String(expr).replace(/×/g,"*").replace(/÷/g,"/").replace(/−/g,"-").replace(/%/g,"/100");
+ if(!s.trim())return 0;
+ if(!/^[0-9+\-*/.() ]+$/.test(s))return null;
+ try{const v=Function('"use strict";return ('+s+')')();return isFinite(v)?r2(v):null}catch(e){return null}
+}
+const txVal=L=>calcEval(strip(L.expr));
+function txTitle(L){
+ const p=party(L.cid),v=txVal(L)||0;
+ return (L.type==="gave"?t("hgave",p?p.name:"",v):t("hgot",p?p.name:"",v));
+}
+function updTx(L){
+ const e=L.el,v=txVal(L);
+ e.querySelector(".ex").textContent=L.expr||"0";
+ e.querySelector(".cres").textContent=v==null?"…":String(v);
+ e.querySelector(".th").textContent=txTitle(L);
+}
+function buildTx(L){
+ const x=L.txid?DB.tx.find(a=>a.id===L.txid):null;
+ if(x&&L.expr===undefined){L.expr=String(x.amount);L.note=x.note;L.date=x.date;L.type=x.type;L.cid=x.pid}
+ if(L.expr===undefined)L.expr="";
+ if(!L.date)L.date=today();if(L.note===undefined)L.note="";
+ const gave=L.type==="gave",rows=[["C","⌫","%","÷"],["7","8","9","×"],["4","5","6","−"],["1","2","3","+"],["0",".","="]];
+ L.el.innerHTML=`<div class="lh ${gave?"red":"grn"}"><span style="width:40px">${x?`<button class="ic" data-act="deltx" data-id="${esc(x.id)}">🗑️</button>`:""}</span><span class="th"></span><button class="ic" data-act="back">✕</button></div>
+ <div class="lb"><div class="fc"><label>${t("amount")}</label><div class="amt">₹ <span class="ex"></span></div></div>
+ <div class="fc"><label>${t("noteopt")}</label><input class="f-note" placeholder="${t("addnote")}" value="${esc(L.note)}"></div>
+ <div class="fc"><label>${t("date")}</label><input class="f-date" type="date" value="${esc(L.date)}"></div>
+ <div class="calc"><div class="cres"></div><div class="keys">${rows.map(r=>r.map(k=>`<button type="button" data-act="key" data-k="${k}" class="${k==="0"?"z":ops.includes(k)||k==="="?"op":(k==="C"||k==="⌫"||k==="%")?"fn":""}">${k}</button>`).join("")).join("")}</div></div></div>
+ <div class="lbar"><button class="big ${gave?"red":"grn"}" data-act="savetx">${t("savetx")}</button></div>`;
+ updTx(L);
+}
+/* ---------- खर्च / आय फ़ॉर्म ---------- */
+function buildExp(L){
+ const x=L.id?DB.cash.find(c=>c.id===L.id):null;
+ if(x&&!L.init){L.init=1;L.type=x.type;L.cat=x.cat;L.amount=x.amount;L.date=x.date;L.note=x.note}
+ L.init=1;if(!L.type)L.type="expense";if(!L.date)L.date=today();
+ if(!L.cat||!catById(L.cat)){const f=DB.cats.find(c=>c.type===L.type);L.cat=f?f.id:""}
+ const ex=L.type==="expense",ct=catById(L.cat);
+ L.el.innerHTML=`<div class="lh ${ex?"red":"grn"}"><button class="ic" data-act="back">←</button><span class="th">${x?(ex?t("editexpT"):t("editincT")):(ex?t("addexpT"):t("addincT"))}</span><span style="width:40px">${x?`<button class="ic" data-act="delexp" data-id="${esc(x.id)}">🗑️</button>`:""}</span></div>
+ <div class="lb"><div class="seg2"><button data-act="etype" data-id="expense" class="${ex?"on rr":""}">${t("expense")}</button><button data-act="etype" data-id="income" class="${!ex?"on gg":""}">${t("income")}</button></div>
+ <div class="fc"><label>${t("date")}</label><input class="f-date" type="date" value="${esc(L.date)}"></div>
+ <div class="fc"><label>${t("amount")} (₹)</label><input class="f-amt" type="number" inputmode="decimal" min="0" step="any" placeholder="0" value="${esc(L.amount||"")}"></div>
+ <div class="fc" data-act="pickcat"><label>${t("category")}</label><div style="padding:6px 0;font-weight:700"><span class="dot" style="background:${ct?ct.color:"#9e9e9e"}"></span>${esc(ct?catName(ct):t("selcat"))} ▾</div></div>
+ <div class="fc"><label>${t("noteopt")}</label><input class="f-note" placeholder="${t("addnote")}" value="${esc(L.note||"")}"></div></div>
+ <div class="lbar"><button class="big ${ex?"red":"grn"}" data-act="saveexp">${t("save")}</button></div>`;
+}
+function syncExp(L){const e=L.el;L.date=e.querySelector(".f-date").value;L.amount=e.querySelector(".f-amt").value;L.note=e.querySelector(".f-note").value}
+/* ---------- श्रेणियाँ ---------- */
+function openCatSheet(type,onpick){
+ push("catsheet",{dlg:true,sheet:true,build(L){
+  const cs=DB.cats.filter(c=>c.type===type);
+  L.el.innerHTML=`<div class="dlg"><div class="dh"><b>${t("category")}</b><span><button class="mini" data-act="managecats2">✏️</button><button class="mini" data-act="back">✕</button></span></div>
+  <div class="grid3">${cs.map(c=>`<button data-act="pcat" data-id="${esc(c.id)}"><span class="dot" style="background:${c.color}"></span>${esc(catName(c))}</button>`).join("")}<button data-act="newcat2">➕ ${t("addcat")}</button></div></div>`;
+ },onpick,type});
+}
+function openCatForm(type,id,done){
+ push("catform",{dlg:true,type,id,done,color:null,build(L){
+  const c=L.id?catById(L.id):null;if(L.color===null)L.color=c?c.color:COLORS[0];
+  L.el.innerHTML=`<div class="dlg"><div class="dh"><b>${c?t("editcat"):t("newcat")}</b><button class="mini" data-act="back">✕</button></div>
+  <div class="fc"><label>${t("catname")}</label><input class="f-cname" value="${esc(c?catName(c):"")}" autocomplete="off"></div>
+  <div class="lbl" style="margin-top:4px">${t("selcolor")}</div><div class="cols">${COLORS.map(k=>`<button data-act="color" data-c="${k}" class="${k===L.color?"on":""}" style="background:${k}"></button>`).join("")}</div>
+  <button class="pri" data-act="savecat">${c?t("save"):t("addcat")}</button></div>`;
+ }});
+}
+function buildCats(L){
+ const ty=L.type,cs=DB.cats.filter(c=>c.type===ty);
+ L.el.innerHTML=`<div class="lh"><button class="ic" data-act="back">←</button><span class="th">${t("managecatsT")}</span><span style="width:40px"></span></div>
+ <div class="lb"><div class="seg2"><button data-act="ctype" data-id="expense" class="${ty==="expense"?"on rr":""}">${t("expense")}</button><button data-act="ctype" data-id="income" class="${ty==="income"?"on gg":""}">${t("income")}</button></div>
+ <div class="sub" style="text-align:center;margin-bottom:8px">${t("tapedit")}</div>
+ ${cs.map(c=>`<div class="card" style="display:flex;align-items:center;gap:8px;padding:6px 12px"><span class="dot" style="background:${c.color}"></span><div style="flex:1">${esc(catName(c))}</div><button class="mini" data-act="editcat" data-id="${esc(c.id)}">✏️</button><button class="mini" data-act="delcat" data-id="${esc(c.id)}">🗑️</button></div>`).join("")}</div>
+ <div class="lbar"><button class="big" data-act="newcat">➕ ${t("addcat")}</button></div>`;
+}
+function buildCatTx(L){
+ const ct=catById(L.cid),ents=DB.cash.filter(c=>(L.cid==="?"?!catById(c.cat):c.cat===L.cid)&&c.type===L.type&&inPer(c.date)).sort((a,b)=>String(b.date).localeCompare(String(a.date))||String(b.at).localeCompare(String(a.at)));
+ const sum=ents.reduce((s,c)=>s+num(c.amount),0);
+ L.el.innerHTML=`<div class="lh"><button class="ic" data-act="back">←</button><span class="th">${esc(catName(ct))}</span><span style="width:40px"></span></div>
+ <div class="lb"><div class="card total"><small>${esc(perLabel()||t("alltime"))}</small><b>${money(sum)}</b></div><div class="card">${ents.length?ents.map(entryRow).join(""):empty("📒",t("noexp"))}</div></div>`;
+}
+/* ---------- क्रियाएँ ---------- */
+const ACT={
+ tab(el){S.tab=el.dataset.id;render();window.scrollTo(0,0)},
+ flt(el){S.flt=el.dataset.id;render()},
+ per(el){S.per=el.dataset.id;render()},
+ pnav(el){const d=new Date(S.ref+"T00:00:00"),n=+el.dataset.n;if(S.per==="month")d.setMonth(d.getMonth()+n);else d.setFullYear(d.getFullYear()+n);S.ref=ymd(d);render()},
+ etog(el){S.etype=el.dataset.id;render()},
+ lang(){LANG=LANG==="hi"?"en":"hi";localStorage.setItem("bk_lang",LANG);render()},
+ back(){back()},
+ addparty(){push("party",{build:buildParty})},
+ editparty(el){push("party",{id:el.dataset.id,build:buildParty})},
+ saveparty(el){
+  const L=layerOf(el),e=L.el,name=e.querySelector(".f-name").value.trim();
+  if(!name){toast(t("badname"));return}
+  const phone=e.querySelector(".f-phone").value.trim(),note=e.querySelector(".f-note").value.trim();
+  if(L.id){const p=party(L.id);p.name=name;p.phone=phone;p.note=note;save();back();render()}
+  else{const id=uid();DB.parties.push({id,name,phone,note,at:new Date().toISOString()});save();openCust(id,true);render()}
+ },
+ opencust(el){openCust(el.dataset.id)},
+ delparty(el){
+  const id=el.dataset.id,p=party(id);if(!p||!confirm(t("delparty")))return;
+  const tx=DB.tx.filter(x=>x.pid===id);
+  DB.parties=DB.parties.filter(x=>x.id!==id);DB.tx=DB.tx.filter(x=>x.pid!==id);save();back();render();
+  toast(t("deleted"),{label:t("undo"),fn:()=>{DB.parties.push(p);DB.tx=DB.tx.concat(tx);save();render()}});
+ },
+ newtx(el){push("tx",{cid:el.dataset.p,type:el.dataset.t,build:buildTx})},
+ edittx(el){push("tx",{txid:el.dataset.id,build:buildTx})},
+ key(el){
+  const L=layerOf(el),k=el.dataset.k;let e=L.expr;
+  if(k==="C")e="";
+  else if(k==="⌫")e=e.slice(0,-1);
+  else if(k==="="){const v=calcEval(strip(e));if(v!=null&&e)e=String(v)}
+  else if(ops.includes(k)){if(!e)return;e=ops.includes(e.slice(-1))?e.slice(0,-1)+k:e+k}
+  else if(k==="%"){if(!e||/[+−×÷%.]$/.test(e))return;e+="%"}
+  else if(k==="."){const seg=e.split(/[+−×÷]/).pop();if(seg.includes("."))return;e+=seg===""?"0.":"."}
+  else e+=k;
+  L.expr=e;updTx(L);
+ },
+ savetx(el){
+  const L=layerOf(el),v=txVal(L);
+  if(!v||v<=0){toast(t("badamt"));return}
+  const note=L.el.querySelector(".f-note").value.trim(),date=L.el.querySelector(".f-date").value||today();
+  const x=L.txid&&DB.tx.find(a=>a.id===L.txid);
+  if(x){x.amount=v;x.note=note;x.date=date}
+  else DB.tx.push({id:uid(),pid:L.cid,type:L.type,amount:v,date,note,at:new Date().toISOString()});
+  save();back();render();
+ },
+ deltx(el){
+  const id=el.dataset.id,x=DB.tx.find(a=>a.id===id);if(!x||!confirm(t("deltx")))return;
+  DB.tx=DB.tx.filter(a=>a.id!==id);save();back();render();
+  toast(t("deleted"),{label:t("undo"),fn:()=>{DB.tx.push(x);save();render()}});
+ },
+ wa(el){
+  const p=parties().find(x=>x.id===el.dataset.id);if(!p)return;
+  const b=DB.biz||"",amt=money(Math.abs(p.bal));
+  const msg=p.bal>0?t("waget",p.name,b,amt):p.bal<0?t("wagive",p.name,b,amt):t("waok",p.name,b);
+  let ph=String(p.phone||"").replace(/\D/g,"");if(ph.length===10)ph="91"+ph;
+  window.open("https://wa.me/"+ph+"?text="+encodeURIComponent(msg),"_blank");
+ },
+ async pick(el){
+  const L=layerOf(el),e=L.el;
+  if(!("contacts" in navigator)||!navigator.contacts.select){toast(t("nocontacts"));return}
+  try{
+   const r=await navigator.contacts.select(["name","tel"],{multiple:false});if(!r||!r.length)return;
+   const c=r[0],nm=(c.name&&c.name[0]||"").trim();
+   let d=String((c.tel&&c.tel[0])||"").replace(/\D/g,"");if(d.length>10&&d.startsWith("91"))d=d.slice(2);d=d.replace(/^0+(?=\d{10}$)/,"");
+   if(!d){toast(t("nonum"));return}
+   e.querySelector(".f-phone").value=d;const n=e.querySelector(".f-name");if(nm&&!n.value.trim())n.value=nm;
+  }catch(x){if(x&&x.name!=="AbortError")toast(t("noread"))}
+ },
+ /* खर्च / आय */
+ addexp(){push("exp",{type:S.etype,build:buildExp})},
+ editexp(el){push("exp",{id:el.dataset.id,build:buildExp})},
+ etype(el){const L=layerOf(el);syncExp(L);L.type=el.dataset.id;L.cat="";buildExp(L)},
+ pickcat(el){
+  const L=layerOf(el);syncExp(L);
+  openCatSheet(L.type,id=>{L.cat=id;buildExp(L)});
+ },
+ pcat(el){const L=layerOf(el),cb=L.onpick,id=el.dataset.id;back();if(cb)cb(id)},
+ saveexp(el){
+  const L=layerOf(el);syncExp(L);
+  const v=r2(L.amount);if(v<=0){toast(t("badamt"));return}
+  if(!catById(L.cat)){toast(t("catfirst"));return}
+  const x=L.id&&DB.cash.find(c=>c.id===L.id);
+  if(x){x.type=L.type;x.cat=L.cat;x.amount=v;x.date=L.date||today();x.note=(L.note||"").trim()}
+  else DB.cash.push({id:uid(),type:L.type,cat:L.cat,amount:v,date:L.date||today(),note:(L.note||"").trim(),at:new Date().toISOString()});
+  S.etype=L.type;save();back();render();
+ },
+ delexp(el){
+  const id=el.dataset.id,x=DB.cash.find(c=>c.id===id);if(!x||!confirm(t("deltx")))return;
+  DB.cash=DB.cash.filter(c=>c.id!==id);save();back();render();
+  toast(t("deleted"),{label:t("undo"),fn:()=>{DB.cash.push(x);save();render()}});
+ },
+ opencat(el){push("cattx",{cid:el.dataset.id,type:S.etype,build:buildCatTx,refresh:buildCatTx})},
+ managecats(){push("cats",{type:S.etype,build:buildCats,refresh:buildCats})},
+ managecats2(el){const L=layerOf(el),ty=L.type;back();push("cats",{type:ty,build:buildCats,refresh:buildCats})},
+ ctype(el){const L=layerOf(el);L.type=el.dataset.id;buildCats(L)},
+ newcat(el){const L=layerOf(el);openCatForm(L.type,null,null)},
+ newcat2(el){const L=layerOf(el),ty=L.type,cb=L.onpick;openCatForm(ty,null,id=>{back();if(cb)cb(id)})},
+ editcat(el){const L=layerOf(el);openCatForm(L.type,el.dataset.id,null)},
+ color(el){const L=layerOf(el);L.color=el.dataset.c;L.el.querySelectorAll(".cols button").forEach(b=>b.classList.toggle("on",b.dataset.c===L.color))},
+ savecat(el){
+  const L=layerOf(el),name=L.el.querySelector(".f-cname").value.trim();
+  if(!name){toast(t("badname"));return}
+  let id=L.id;
+  if(id){const c=catById(id);if(c){c.name=name;c.color=L.color}}
+  else{id="c_"+uid();DB.cats.push({id,type:L.type,name,color:L.color})}
+  save();const done=L.done;back();render();if(done)done(id);
+ },
+ delcat(el){
+  const id=el.dataset.id;if(!confirm(t("delcat")))return;
+  DB.cats=DB.cats.filter(c=>c.id!==id);save();render();
+ },
+ /* मेन्यू */
+ menu(){
+  if(document.querySelector(".menu")){closeMenu();return}
+  const m=document.createElement("div");m.className="menu";
+  m.innerHTML=`<button data-act="bizname">${t("bizname")}</button><button data-act="export">${t("backup")}</button><button data-act="import">${t("restore")}</button>${deferred?`<button data-act="install">${t("install")}</button>`:""}`;
+  document.body.appendChild(m);
+ },
+ bizname(){
+  closeMenu();
+  push("biz",{dlg:true,build(L){L.el.innerHTML=`<div class="dlg"><div class="dh"><b>${t("bizname")}</b><button class="mini" data-act="back">✕</button></div><div class="fc"><input class="f-biz" value="${esc(DB.biz)}"></div><button class="pri" style="background:var(--p)" data-act="savebiz">${t("save")}</button></div>`}});
+ },
+ savebiz(el){const L=layerOf(el);DB.biz=L.el.querySelector(".f-biz").value.trim();save();back();render()},
+ export(){
+  closeMenu();
+  const b=new Blob([JSON.stringify(DB)],{type:"application/json"}),a=document.createElement("a");
+  a.href=URL.createObjectURL(b);a.download="bahi-khata-backup-"+today()+".json";document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+ },
+ import(){closeMenu();$("imp").click()},
+ install(){closeMenu();if(deferred){deferred.prompt();deferred=null}}
+};
+function closeMenu(){const m=document.querySelector(".menu");if(m)m.remove()}
+/* ---------- ईवेंट ---------- */
+document.addEventListener("click",e=>{
+ const w=e.target.closest(".dlgwrap");
+ if(w&&e.target===w){back();return}
+ const el=e.target.closest("[data-act]");
+ if(!el){if(!e.target.closest(".menu"))closeMenu();return}
+ const f=ACT[el.dataset.act];if(f){e.preventDefault();f(el,e)}
+});
+document.addEventListener("input",e=>{
+ if(e.target.id==="q"){S.q=e.target.value;const l=$("plist");if(l)l.innerHTML=listHtml()}
+});
+$("imp").addEventListener("change",e=>{
+ const f=e.target.files[0];if(!f)return;
+ const r=new FileReader();
+ r.onload=()=>{try{
+  const d=JSON.parse(r.result);if(!d||!Array.isArray(d.parties)||!Array.isArray(d.tx)||!Array.isArray(d.cash))throw 0;
+  if(!confirm(t("restoreq")))return;
+  DB=migrate(d);save();render();toast(t("restored"));
+ }catch(x){toast(t("badfile"))}};
+ r.readAsText(f);e.target.value="";
+});
+let deferred=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e});
+if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("service-worker.js").catch(()=>{}));
+render();
+</script>
+</body>
+</html>
